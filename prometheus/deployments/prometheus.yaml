@@ -1,0 +1,69 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: prometheus
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    spec:
+      initContainers:
+        - name: set-datadir-perms
+          image: docker.io/prom/prometheus:v2.28.1
+          volumeMounts:
+            - name: prometheus-data
+              mountPath: /prometheus
+          command:
+            - sh
+            - -c
+            - >-
+              chown -R nobody:nobody /prometheus;
+              chmod -R 750 /prometheus
+          securityContext:
+            runAsUser: 0
+      containers:
+        - name: prometheus
+          image: docker.io/prom/prometheus:v2.28.1
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - name: prometheus-config
+              mountPath: /etc/prometheus
+            - name: prometheus-data
+              mountPath: /prometheus
+          args:
+            - --config.file=/etc/prometheus/prometheus.yml
+            - --storage.tsdb.path=/prometheus
+            - --storage.tsdb.retention.time=1w
+            - --storage.tsdb.min-block-duration=2h
+            - --storage.tsdb.max-block-duration=2h
+            - --web.console.libraries=/usr/share/prometheus/console_libraries
+            - --web.console.templates=/usr/share/prometheus/consoles
+            - --web.external-url=http://monitoring.internal/prometheus
+            - --web.enable-lifecycle
+        - name: thanos-sidecar
+          image: quay.io/thanos/thanos:v0.22.0
+          args:
+            - sidecar
+            - --prometheus.url=http://localhost:9090/prometheus
+            - --objstore.config-file=/etc/thanos/bucket_config.yaml
+            - --tsdb.path=/prometheus
+          ports:
+            - containerPort: 10901
+            - containerPort: 10902
+          volumeMounts:
+            - name: thanos-bucket-config
+              mountPath: /etc/thanos
+            - name: prometheus-data
+              mountPath: /prometheus
+      volumes:
+        - name: thanos-bucket-config
+          secret:
+            secretName: thanos-bucket-config
+        - name: prometheus-config
+          configMap:
+            name: prometheus-config
+        - name: prometheus-data
+          persistentVolumeClaim:
+            claimName: prometheus-data

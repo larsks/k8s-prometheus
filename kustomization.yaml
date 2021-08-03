@@ -1,0 +1,17 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: prometheus
+
+commonLabels:
+  app: monitoring
+
+resources:
+  - namespaces/prometheus.yaml
+  - sealedsecrets/thanos-bucket-config.sealed.yaml
+  - timescaledb
+  - promscale
+  - prometheus
+  - grafana
+  - snmp-exporter
+  - redirector
+  - thanos

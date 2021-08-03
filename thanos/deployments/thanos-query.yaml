@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: thanos-query
+  labels:
+    thanos/component: query
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        thanos/component: query
+    spec:
+      containers:
+        - name: thanos-query
+          image: quay.io/thanos/thanos:v0.22.0
+          ports:
+            - containerPort: 9090
+          args:
+            - query
+            - --http-address=0.0.0.0:9090
+            - --store=thanos-sidecar-grpc:10901
+            - --store=thanos-store-grpc:10901

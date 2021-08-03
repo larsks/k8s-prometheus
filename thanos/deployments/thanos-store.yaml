@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: thanos-store
+  labels:
+    thanos/component: store
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        thanos/component: store
+    spec:
+      containers:
+        - name: thanos-store
+          image: quay.io/thanos/thanos:v0.22.0
+          ports:
+            - containerPort: 10901
+            - containerPort: 10902
+          args:
+            - store
+            - --data-dir=/thanos
+            - --objstore.config-file=/etc/thanos/bucket_config.yaml
+          volumeMounts:
+            - name: thanos-bucket-config
+              mountPath: /etc/thanos
+            - name: thanos-store-data
+              mountPath: /data
+      volumes:
+        - name: thanos-bucket-config
+          secret:
+            secretName: thanos-bucket-config
+        - name: thanos-store-data
+          persistentVolumeClaim:
+            claimName: thanos-store-data

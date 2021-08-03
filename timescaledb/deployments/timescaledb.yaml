@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: timescaledb
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    spec:
+      initContainers:
+        - name: set-datadir-perms
+          image: docker.io/timescale/timescaledb:2.4.0-pg13
+          volumeMounts:
+            - name: timescaledb-data
+              mountPath: /data
+          command:
+            - sh
+            - -c
+            - >-
+              chown -R postgres:postgres /data;
+              chmod -R 750 /data
+          securityContext:
+            runAsUser: 0
+      containers:
+        - name: timescaledb
+          image: docker.io/timescale/timescaledb:2.4.0-pg13
+          ports:
+            - containerPort: 5432
+          volumeMounts:
+            - name: timescaledb-data
+              mountPath: /var/lib/postgresql/data
+          envFrom:
+            - secretRef:
+                name: timescaledb-secret
+      volumes:
+        - name: timescaledb-data
+          persistentVolumeClaim:
+            claimName: timescaledb-data

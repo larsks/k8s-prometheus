@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: grafana
+spec:
+  replicas: 1
+  template:
+    spec:
+      initContainers:
+        - name: set-datadir-perms
+          image: docker.io/grafana/grafana:8.1.0-beta3
+          volumeMounts:
+            - name: grafana-data
+              mountPath: /var/lib/grafana
+          command:
+            - sh
+            - -c
+            - >-
+              chown -R grafana /var/lib/grafana;
+              chmod -R 750 /var/lib/grafana
+          securityContext:
+            runAsUser: 0
+      containers:
+        - name: grafana
+          image: docker.io/grafana/grafana:8.1.0-beta3
+          ports:
+            - containerPort: 3000
+          volumeMounts:
+            - name: grafana-data
+              mountPath: /var/lib/grafana
+          envFrom:
+            - configMapRef:
+                name: grafana-config
+      volumes:
+        - name: grafana-data
+          persistentVolumeClaim:
+            claimName: grafana-data

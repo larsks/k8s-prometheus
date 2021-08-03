@@ -1,0 +1,17 @@
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  creationTimestamp: null
+  name: thanos-bucket-config
+  namespace: prometheus
+spec:
+  encryptedData:
+    bucket_config.yaml: AgDRAoio4cPkivf3Ez/bVhxCuq+gG3NtCCR1cfvyPaLXLJA2nHrPzVrTJAlmba/i7mjFSYV7Y4pBMD94t9PiXeKUlx0PUe1VwHhT3SU7lwZIRmdY+zXRTDdJwn8LMuyLd/gOvqaQxpvySmVu4K/kVyiSpTwoCStI9vk4k/AiSEr4w5L+oGzFYl7hkzyHZkZyWRqAZDAZzVO/AtGzeQUfBOOaJVzORFzVAkxKnKq7jDWGQHkh2RoVpmQt3/UFcd0e+EgDDXsSnH2mwk5Lfqqk2lMubZqdH4ic4fyxbbxzT5V950NyWZr2yfItFIVYK9kLVYnZxus/4mvDlgPxDcA+8UQvqdXyrXZvjbOdET5FuMc4CCcDAVsYs6gshop7obh7JdaLI0Kk5oXvx7GzWDJs//v4sQ0sB9mSBF8hRAOSxia1f8wfAJPyB0pFDgwnn32TWjAJtbQNqkNaVYBW23vY0CsZoHiRezz4yE+pjGA01sis1drExEEKhw4s+8dffkd/1CS+7sOM92wJ0jmPqEoboFpgE6IBoWuP9rJMXBciCKcTpUzIHU5+xnNCRFTP4hLXqnsPReIkORG/CgsAEVdthrtCC5mPVF1q77rLRL5+i99iBCIH4+TK/jWJoIJ+KdEstQr8rjqybsx7qg1rQHA3piwy+/eShyBgnYR+d8y8LzVk8ZhVFLXv3YQRw7WVB0+uDeJVBDyHjYqulP8uwKnq+Wjs/VPbclO+VH27tkk/V/tnO2il2k8ChoZDCbosluzFjaL7Fmte+IvfrfR33kQP5/BWK9CgehIFx2pjHvrAcT0YcTFbKXOwWOAnFjLv65Bz3rReZytEQfFxOPvp1YT2W9kU4H9KeaRKFD6wrQCHMwCArlGt2paID7YxuBMA2Ujk3JelLRJhXW0TnhD0bgMe9eM8PUpBOznjUX417CrNEMV+LIEUEN6lsaqr0Jyv8d4LF9IuzZ7MdZSraX+QYFG0WBbGwzDsqh7RUVyGgsqfPm8uF7vJSA==
+  template:
+    data: null
+    metadata:
+      creationTimestamp: null
+      name: thanos-bucket-config
+      namespace: prometheus
+    type: Opaque
+

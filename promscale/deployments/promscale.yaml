@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: promscale
+spec:
+  replicas: 1
+  template:
+    spec:
+      containers:
+        - name: promscale
+          image: docker.io/timescale/promscale:0.5
+          ports:
+            - containerPort: 9201
+          envFrom:
+            - secretRef:
+                name: promscale-secret
+            - configMapRef:
+                name: promscale-config

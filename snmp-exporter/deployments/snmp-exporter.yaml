@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: snmp-exporter
+spec:
+  replicas: 1
+  template:
+    spec:
+      initContainers:
+        - name: snmp-generator
+          image: docker.io/prom/snmp-generator:v0.20.0
+          volumeMounts:
+            - name: generator-data
+              mountPath: /data
+            - name: generator-config
+              mountPath: /config
+          command:
+            - sh
+            - /data/generate-snmp-exporter-config.sh
+      containers:
+        - name: snmp-exporter
+          image: docker.io/prom/snmp-exporter:v0.20.0
+          ports:
+            - containerPort: 9116
+          command:
+            - snmp_exporter
+          args:
+            - --config.file=/config/snmp.yml
+          volumeMounts:
+            - name: generator-config
+              mountPath: /config
+          env:
+            - name: MIBSDIR
+              value: /config/librenms/mibs:/config/mibs
+      volumes:
+        - name: generator-data
+          configMap:
+            name: generator-data
+        - name: generator-config
+          persistentVolumeClaim:
+            claimName: generator-config

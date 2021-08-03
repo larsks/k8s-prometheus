@@ -1,0 +1,15 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+commonLabels:
+  component: grafana
+
+resources:
+  - deployments/grafana.yaml
+  - persistentvolumeclaims/grafana-data.yaml
+  - services/grafana.yaml
+  - ingresses/grafana.yaml
+
+configMapGenerator:
+  - name: grafana-config
+    envs:
+      - grafana.env
