@@ -7,7 +7,9 @@ commonLabels:
 resources:
 - deployments/thanos-store.yaml
 - deployments/thanos-query.yaml
+- cronjobs/thanos-compact.yaml
 - persistentvolumeclaims/thanos-store-data.yaml
+- persistentvolumeclaims/thanos-compact-data.yaml
 - services/thanos-store-grpc.yaml
 - services/thanos-store-http.yaml
 - services/thanos-query-http.yaml

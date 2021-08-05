@@ -1,0 +1,35 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: thanos-compact
+  labels:
+    thanos/component: compact
+spec:
+  schedule: "@hourly"
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: thanos-compact
+              image: quay.io/thanos/thanos:v0.22.0
+              ports:
+                - containerPort: 10902
+              args:
+                - compact
+                - --data-dir=/thanos
+                - --objstore.config-file=/etc/thanos/bucket_config.yaml
+              volumeMounts:
+                - name: thanos-bucket-config
+                  mountPath: /etc/thanos
+                - name: thanos-compact-data
+                  mountPath: /data
+          volumes:
+            - name: thanos-bucket-config
+              secret:
+                secretName: thanos-bucket-config
+            - name: thanos-compact-data
+              persistentVolumeClaim:
+                claimName: thanos-compact-data
+          restartPolicy: Never
