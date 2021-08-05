@@ -8,8 +8,6 @@ commonLabels:
 resources:
   - namespaces/prometheus.yaml
   - sealedsecrets/thanos-bucket-config.sealed.yaml
-  - timescaledb
-  - promscale
   - prometheus
   - grafana
   - snmp-exporter

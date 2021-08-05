@@ -7,19 +7,23 @@ PV ownership).
 
 The full stack includes:
 
-- [PromScale](https://github.com/timescale/promscale)
-  - [TimeScaleDB](https://www.timescale.com/)
+- [Prometheus](https://prometheus.io/)
 
 - [Thanos](https://thanos.io/)
+
+  I use thanos to ship metrics to an S3 bucket on a remote fileserver
+  both (a) for long term storage and (b) to preserve history in the
+  event that I blow away the local installation at some point.
 
 - [Grafana](https://grafana.com/)
 
 - [SNMP Exporter](https://github.com/prometheus/snmp_exporter)
 
+  I use the SNMP exporter to collect data from my home router.
+
 Everything is deployed using [Kustomize](https://kustomize.io). I'm
-  using [Bitnami Sealed
-  Secrets](https://github.com/bitnami-labs/sealed-secrets) for
-  secrets.
+using [Bitnami Sealed
+Secrets](https://github.com/bitnami-labs/sealed-secrets) for secrets.
 
 ## Deploying
 
@@ -38,8 +42,6 @@ resources:
   - namespaces/prometheus.yaml
   - sealedsecrets/thanos-bucket-config.sealed.yaml
 
-  - timescaledb
-  - promscale
   - prometheus
   - grafana
   - snmp-exporter
