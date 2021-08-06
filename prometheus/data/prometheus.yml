@@ -23,6 +23,7 @@ scrape_configs:
     static_configs:
       - targets:
           - 172.31.64.1:9100
+          - keg.house:9100
 
   - job_name: snmp_ifmib
     static_configs:
