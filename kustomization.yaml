@@ -8,7 +8,6 @@ commonLabels:
 resources:
   - namespaces/prometheus.yaml
   - sealedsecrets/thanos-bucket-config.sealed.yaml
-  - middlewares/redirect-to-grafana.yaml
   - ingress/monitoring.yaml
 
   - prometheus
