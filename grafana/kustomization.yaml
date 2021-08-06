@@ -7,7 +7,6 @@ resources:
   - deployments/grafana.yaml
   - persistentvolumeclaims/grafana-data.yaml
   - services/grafana.yaml
-  - ingresses/grafana.yaml
 
 configMapGenerator:
   - name: grafana-config

@@ -14,4 +14,3 @@ resources:
   - services/prometheus.yaml
   - services/thanos-sidecar-grpc.yaml
   - services/thanos-sidecar-http.yaml
-  - ingresses/prometheus.yaml
