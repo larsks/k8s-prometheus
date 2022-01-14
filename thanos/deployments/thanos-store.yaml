@@ -20,7 +20,7 @@ spec:
           args:
             - store
             - --data-dir=/thanos
-            - --objstore.config-file=/etc/thanos/bucket_config.yaml
+            - --objstore.config-file=/etc/thanos/bucket-config.yaml
           volumeMounts:
             - name: thanos-bucket-config
               mountPath: /etc/thanos

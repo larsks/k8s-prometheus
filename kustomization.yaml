@@ -7,10 +7,14 @@ commonLabels:
 
 resources:
   - namespaces/prometheus.yaml
-  - sealedsecrets/thanos-bucket-config.sealed.yaml
   - ingress/monitoring.yaml
 
   - prometheus
   - grafana
   - snmp-exporter
   - thanos
+
+secretGenerator:
+  - name: thanos-bucket-config
+    files:
+      - bucket-config.yaml=config/thanos-bucket-config.yaml
