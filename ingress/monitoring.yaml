@@ -22,3 +22,10 @@ spec:
                 name: prometheus
                 port:
                   number: 9090
+          - path: /thanos
+            pathType: Prefix
+            backend:
+              service:
+                name: thanos-query-http
+                port:
+                  number: 9090

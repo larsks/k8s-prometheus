@@ -21,3 +21,4 @@ spec:
             - --http-address=0.0.0.0:9090
             - --store=thanos-sidecar-grpc:10901
             - --store=thanos-store-grpc:10901
+            - --web.external-prefix=/thanos
