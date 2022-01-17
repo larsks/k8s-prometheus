@@ -12,3 +12,11 @@ configMapGenerator:
   - name: grafana-config
     envs:
       - grafana.env
+
+  - name: provision-datasources
+    files:
+      - provisioning/datasources.yaml
+
+  - name: provision-dashboards
+    files:
+      - provisioning/dashboards.yaml
