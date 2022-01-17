@@ -25,6 +25,12 @@ scrape_configs:
           - 172.31.64.1:9100
           - keg.house:9100
 
+  - job_name: warmoffice
+    static_configs:
+      - targets:
+          - warmoffice.house:9090
+    metrics_path: /metrics
+
   - job_name: snmp_ifmib
     static_configs:
       - targets:
