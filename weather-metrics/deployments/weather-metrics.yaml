@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: weather-metrics
+spec:
+  replicas: 1
+  template:
+    spec:
+      containers:
+        - name: json2prom
+          image: quay.io/larsks/json2prom:f06c0ac
+          envFrom:
+            - secretRef:
+                name: weather-metrics-credentials
+          ports:
+            - containerPort: 8080
+              name: metrics
+          volumeMounts:
+            - name: weather-metrics-config
+              mountPath: /config
+          args:
+            - --config-file=/config/config.json
+      volumes:
+        - name: weather-metrics-config
+          configMap:
+            name: weather-metrics-config

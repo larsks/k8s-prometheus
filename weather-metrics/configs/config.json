@@ -1,0 +1,42 @@
+{
+  "labels": {},
+  "nameprefix": "weather_",
+  "sources": [
+    {
+      "name": "openweather",
+      "expose": {
+        "main.temp": "current_temp",
+        "main.feels_like": "feels_like",
+        "main.pressure": "pressure",
+        "main.humidity": "humidity",
+        "wind.speed": "windspeed"
+      },
+      "urls": [
+        {
+          "labels": {
+            "location": "boston"
+          },
+          "url": "https://api.openweathermap.org/data/2.5/weather?q=Boston&appid={OPENWEATHER_API_KEY}&units=metric"
+        }
+      ]
+    },
+    {
+      "name": "weatherapi",
+      "expose": {
+        "current.temp_c": "current_temp",
+        "current.feelslike_c": "feels_like",
+        "current.pressure_mb": "pressure",
+        "current.humidity": "humidity",
+        "current.wind_kph": "windspeed"
+      },
+      "urls": [
+        {
+          "labels": {
+            "location": "boston"
+          },
+          "url": "https://api.weatherapi.com/v1/current.json?key={WEATHERAPI_API_KEY}&q=Boston&aqi=no"
+        }
+      ]
+    }
+  ]
+}

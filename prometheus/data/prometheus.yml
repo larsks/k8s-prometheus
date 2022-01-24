@@ -31,6 +31,12 @@ scrape_configs:
           - 192.168.1.233:9100
     metrics_path: /metrics
 
+  - job_name: weather
+    static_configs:
+      - targets:
+          - weather-metrics:8080
+    metrics_path: /metrics
+
   - job_name: snmp_ifmib
     static_configs:
       - targets:

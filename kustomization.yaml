@@ -13,6 +13,7 @@ resources:
   - grafana
   - snmp-exporter
   - thanos
+  - weather-metrics
 
 secretGenerator:
   - name: thanos-bucket-config
