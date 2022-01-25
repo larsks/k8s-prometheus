@@ -1,16 +1,58 @@
 {
-  "labels": {},
   "nameprefix": "weather_",
+  "defaults": {
+    "type": "gauge"
+  },
+  "labels": [
+    "location"
+  ],
+  "metrics": [
+    {
+      "name": "current_temp",
+      "description": "current temperature (°C)"
+    },
+    {
+      "name": "feels_like",
+      "description": "current apparent temperature (°C)"
+    },
+    {
+      "name": "pressure",
+      "description": "barometric pressure (mbar)"
+    },
+    {
+      "name": "humidity",
+      "description": "humidity (%)"
+    },
+    {
+      "name": "windspeed",
+      "description": "windspeed (K/h)"
+    }
+  ],
   "sources": [
     {
       "name": "openweather",
-      "expose": {
-        "main.temp": "current_temp",
-        "main.feels_like": "feels_like",
-        "main.pressure": "pressure",
-        "main.humidity": "humidity",
-        "wind.speed": "windspeed"
-      },
+      "metrics": [
+        {
+          "name": "current_temp",
+          "path": "main.temp"
+        },
+        {
+          "name": "feels_like",
+          "path": "main.feels_like"
+        },
+        {
+          "name": "pressure",
+          "path": "main.pressure"
+        },
+        {
+          "name": "humidity",
+          "path": "main.humidity"
+        },
+        {
+          "name": "windspeed",
+          "path": "wind.speed"
+        }
+      ],
       "urls": [
         {
           "labels": {
@@ -22,13 +64,28 @@
     },
     {
       "name": "weatherapi",
-      "expose": {
-        "current.temp_c": "current_temp",
-        "current.feelslike_c": "feels_like",
-        "current.pressure_mb": "pressure",
-        "current.humidity": "humidity",
-        "current.wind_kph": "windspeed"
-      },
+      "metrics": [
+        {
+          "name": "current_temp",
+          "path": "current.temp_c"
+        },
+        {
+          "name": "feels_like",
+          "path": "current.feelslike_c"
+        },
+        {
+          "name": "pressure",
+          "path": "current.pressure_mb"
+        },
+        {
+          "name": "humidity",
+          "path": "current.humidity"
+        },
+        {
+          "name": "windspeed",
+          "path": "current.wind_kph"
+        }
+      ],
       "urls": [
         {
           "labels": {

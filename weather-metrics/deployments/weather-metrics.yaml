@@ -8,7 +8,10 @@ spec:
     spec:
       containers:
         - name: json2prom
-          image: quay.io/larsks/json2prom:f06c0ac
+          image: quay.io/larsks/json2prom:1a897e3
+          env:
+            - name: J2P_LOG_LEVEL
+              value: "1"
           envFrom:
             - secretRef:
                 name: weather-metrics-credentials
@@ -19,6 +22,7 @@ spec:
             - name: weather-metrics-config
               mountPath: /config
           args:
+            - --port=8080
             - --config-file=/config/config.json
       volumes:
         - name: weather-metrics-config
