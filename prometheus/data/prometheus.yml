@@ -37,6 +37,32 @@ scrape_configs:
           - weather-metrics:8080
     metrics_path: /metrics
 
+  - job_name: sflow-rt-analyzer
+    metrics_path: /prometheus/analyzer/txt
+    static_configs:
+      - targets:
+        - sflow-http:8008
+
+  - job_name: sflow-rt-metrics
+    metrics_path: /prometheus/metrics/ALL/ALL/txt
+    static_configs:
+      - targets:
+        - sflow-http:8008
+
+  - job_name: 'sflow-rt-src-dst-bps'
+    metrics_path: /app/prometheus/scripts/export.js/flows/ALL/txt
+    static_configs:
+      - targets:
+        - sflow-http:8008
+    params:
+      metric: ['ip_src_dst_bps']
+      key: ['ipsource', 'ipdestination']
+      label: ['src', 'dst']
+      value: ['bytes']
+      scale: ['8']
+      minValue: ['1000']
+      maxFlows: ['100']
+
   - job_name: snmp_ifmib
     static_configs:
       - targets:
