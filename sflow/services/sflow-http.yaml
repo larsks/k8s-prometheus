@@ -6,4 +6,3 @@ spec:
   ports:
     - port: 8008
       targetPort: http
-  type: LoadBalancer
