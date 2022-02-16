@@ -17,10 +17,27 @@ spec:
             - -c
             - |
               chown -R grafana /var/lib/grafana
-              chmod -R 750 /var/lib/grafana
-              mkdir -p /var/lib/grafana/dashboards
-              cd /var/lib/grafana/dashboards
-              wget -O node_exporter.json 'https://grafana.com/api/dashboards/1860/revisions/25/download'
+              chmod -R ug+rwX /var/lib/grafana
+          securityContext:
+            runAsUser: 0
+        - name: provision-dashboards
+          image: docker.io/grafana/grafana:8.2.6
+          volumeMounts:
+            - name: grafana-data
+              mountPath: /var/lib/grafana
+          command:
+            - /bin/sh
+            - -c
+            - |
+              apk add --update git
+              cd /var/lib/grafana
+              if [ ! -d dashboards ]; then
+                git clone https://github.com/larsks/grafana-dashboards dashboards
+              else
+                git -C dashboards diff
+                git -C dashboards checkout --force HEAD
+                git -C dashboards pull --force --rebase
+              fi
           securityContext:
             runAsUser: 0
       containers:
