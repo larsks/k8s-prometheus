@@ -34,6 +34,7 @@ spec:
               if [ ! -d dashboards ]; then
                 git clone https://github.com/larsks/grafana-dashboards dashboards
               else
+                git config --global --add safe.directory /var/lib/grafana/dashboards
                 git -C dashboards diff
                 git -C dashboards checkout --force HEAD
                 git -C dashboards pull --force --rebase
